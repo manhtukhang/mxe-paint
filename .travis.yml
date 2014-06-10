@@ -1,0 +1,50 @@
+language: cpp
+compiler:
+  - gcc
+  # - clang
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install tree -y
+  - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
+  - export PATH=$HOME/mxe/usr/bin:$PATH
+# - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
+
+#branches:
+ # only:
+  #  - mxe_test
+
+before_script:
+  - git clone -b master https://github.com/manhtuvjp/mini-paint.git
+
+script:
+  - cd mini-paint
+  - cd plugins/
+  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
+  - make -j 10
+  - make clean
+  - cd ../
+  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake mini-paint.pro
+  - make -j 10
+  - make clean
+
+after_success:
+  - tree
+
+notifications:
+  email:
+    recipients:
+      - manhtuvjp@gmail
+      - hoaiphong95@gmail
+    on_success: always
+    on_failure: always
+  irc:
+    channels:
+      - "chat.freenode.net#manhtu"
+      - "chat.freenode.net##manhtu"
+    template:
+      - "%{repository}/%{branch} (%{commit} - %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
+    on_success: always
+    on_failure: always
