@@ -36,7 +36,7 @@ after_success:
   - cd $HOME
   - ls
   - git config --global user.email "manhtuvjp@gmail.com"
-  - git config --global user.name 'Mạnh Tử'
+  - git config --global user.name "MT"
   - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
   - cd paint_bin
   - cp $CDIR/minni-paint.zip .
