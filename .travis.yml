@@ -4,21 +4,22 @@ compiler:
   # - clang
 
 before_install:
+  - CDIR=$(pwd)
   - sudo apt-get update -qq
   - sudo apt-get install tree zip -y
   - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
+  - cd $HOME/mxe
+  - chmod 777 ./link.sh
+  - ./link.sh
   - export PATH=$HOME/mxe/usr/bin:$PATH
 # - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
 
-#branches:
- # only:
-  #  - mxe_test
-
 before_script:
-  - git clone -b master https://github.com/manhtuvjp/mini-paint.git
+  - cd $CDIR
+  - git clone -b master https://github.com/manhtuvjp/mini-paint.git mini-paint-master
 
 script:
-  - cd mini-paint
+  - cd mini-paint-master
   - cd plugins/
   - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
   - make -j 10
@@ -35,9 +36,9 @@ after_success:
   - cd $HOME
   - ls
   - git config --global user.email "manhtuvjp@gmail.com"
-  - git config --global user.name "Mạnh Tử"
-  - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git mxe_bin > /dev/null
-  - cd mxe_bin
+  - git config --global user.name 'Mạnh Tử'
+  - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
+  - cd paint_bin
   - cp $CDIR/minni-paint.zip .
   # - chmod +x link.sh
   # - cp -Rf $HOME/mxe/usr .
@@ -45,8 +46,9 @@ after_success:
   - git add -f .
   - git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to bin"
   - git push -fq origin bin > /dev/null
+  - echo -e "Done"
 
-branchs:
+branches:
   only:
     - master
 
