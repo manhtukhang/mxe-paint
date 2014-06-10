@@ -34,7 +34,7 @@ script:
 after_success:
   - cd $HOME
   - ls
-  - git config --global user.email "manhtuvjp@gmail.com"
+  # - git config --global user.email "manhtuvjp@gmail.com"
   - git config --global user.name "Mạnh Tử"
   - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
   - cd paint_bin
