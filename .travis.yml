@@ -5,7 +5,7 @@ compiler:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install tree -y
+  - sudo apt-get install tree zip -y
   - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
   - export PATH=$HOME/mxe/usr/bin:$PATH
 # - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
@@ -27,9 +27,28 @@ script:
   - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake mini-paint.pro
   - make -j 10
   - make clean
+  - CDIR=$(pwd)
+  - cp libextrafilters.a ./release/
+  - zip -r minni-paint.zip ./release
 
 after_success:
-  - tree
+  - cd $HOME
+  - ls
+  - git config --global user.email "manhtuvjp@gmail.com"
+  - git config --global user.name "Mạnh Tử"
+  - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git mxe_bin > /dev/null
+  - cd mxe_bin
+  - cp $CDIR/minni-paint.zip .
+  # - chmod +x link.sh
+  # - cp -Rf $HOME/mxe/usr .
+  # - cp -f $HOME/mxe/tree.txt .
+  - git add -f .
+  - git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to bin"
+  - git push -fq origin bin > /dev/null
+
+branchs:
+  only:
+    - master
 
 notifications:
   email:
@@ -48,3 +67,7 @@ notifications:
       - "Build details : %{build_url}"
     on_success: always
     on_failure: always
+
+env:
+  global:
+  - secure: G5AYDU0LIHIjigB7dvYnt9tVsDauNtQ0FdZMBOehjHczaU/wxXqnRhAobFRuuEG19Q6uvcyqA+dK5Tn4AzEd1FjLXW5/u8vi8yNUAyDdWA1+whnP9pL2qQTJKy/c6nxZAEXakGO+SO/NKU3pzmziNeVSeGKKrwF/aE5Wv5VsV3M=
