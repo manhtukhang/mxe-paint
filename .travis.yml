@@ -15,10 +15,10 @@ before_install:
   #  - mxe_test
 
 before_script:
-  - git clone -b master https://github.com/manhtuvjp/mini-paint.git
+  - git clone -b master https://github.com/manhtuvjp/mini-paint.git mini-paint-master
 
 script:
-  - cd mini-paint
+  - cd mini-paint-master
   - cd plugins/
   - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
   - make -j 10
@@ -36,8 +36,8 @@ after_success:
   - ls
   - git config --global user.email "manhtuvjp@gmail.com"
   - git config --global user.name "Mạnh Tử"
-  - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git mxe_bin > /dev/null
-  - cd mxe_bin
+  - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
+  - cd paint_bin
   - cp $CDIR/minni-paint.zip .
   # - chmod +x link.sh
   # - cp -Rf $HOME/mxe/usr .
@@ -45,6 +45,7 @@ after_success:
   - git add -f .
   - git commit -m "Travis build $TRAVIS_BUILD_NUMBER pushed to bin"
   - git push -fq origin bin > /dev/null
+  - echo -e "Done"
 
 branchs:
   only:
