@@ -4,9 +4,13 @@ compiler:
   # - clang
 
 before_install:
+  - CDIR=$(pwd)
   - sudo apt-get update -qq
   - sudo apt-get install tree zip -y
   - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
+  - cd $HOME/mxe
+  - chmod 777 ./link.sh
+  - ./link.sh
   - export PATH=$HOME/mxe/usr/bin:$PATH
 # - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
 
@@ -15,6 +19,7 @@ before_install:
   #  - mxe_test
 
 before_script:
+  - cd $CDIR
   - git clone -b master https://github.com/manhtuvjp/mini-paint.git mini-paint-master
 
 script:
@@ -34,8 +39,8 @@ script:
 after_success:
   - cd $HOME
   - ls
-  # - git config --global user.email "manhtuvjp@gmail.com"
-  - git config --global user.name "Mạnh Tử"
+  - git config --global user.email "manhtuvjp@gmail.com"
+  - git config --global user.name "MT"
   - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
   - cd paint_bin
   - cp $CDIR/minni-paint.zip .
