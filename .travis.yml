@@ -9,8 +9,8 @@ before_install:
   - sudo apt-get install tree zip -y
   - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
   - cd $HOME/mxe
-  - chmod 777 ./link.sh
-  - ./link.sh
+  # - chmod 777 ./link.sh
+  # - ./link.sh
   - export PATH=$HOME/mxe/usr/bin:$PATH
 # - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
 
