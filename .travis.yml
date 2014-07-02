@@ -7,11 +7,11 @@ before_install:
   - CDIR=$(pwd)
   - sudo apt-get update -qq
   - sudo apt-get install tree zip -y
-  - git clone -b bin https://github.com/manhtuvjp/test_mxe.git mxe
-  - cd mxe
+  - git clone -b bin https://github.com/manhtuvjp/test_mxe.git $HOME/mxe
+  - cd $HOME/mxe
   # - chmod 777 ./link.sh
   # - ./link.sh
-  - export PATH=$CDIR/mxe/usr/bin:$PATH
+  - export PATH=$HOME/mxe/usr/bin:$PATH
 # - unset `env | grep -vi '^EDITOR=\|^HOME=\|^LANG=\|MXE\|^PATH=' | grep -vi 'PKG_CONFIG\|PROXY\|^PS1=\|^TERM=' | cut -d '=' -f1 | tr '\n' ' '`
 
 before_script:
@@ -21,11 +21,11 @@ before_script:
 script:
   - cd mini-paint-master
   - cd plugins/
-  - $CDIR/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
+  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
   - make -j 10
   - make clean
   - cd ../
-  - $CDIR/mxe/usr/i686-pc-mingw32/qt5/bin/qmake mini-paint.pro
+  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake mini-paint.pro
   - make -j 10
   - make clean
   - CDIR=$(pwd)
