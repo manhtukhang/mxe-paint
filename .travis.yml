@@ -16,21 +16,21 @@ before_install:
 
 before_script:
   - cd $CDIR
-  - git clone -b master https://github.com/manhtuvjp/mini-paint.git mini-paint-master
+  - git clone -b master https://github.com/manhtuvjp/nr.git mini-paint-master
 
 script:
   - cd mini-paint-master
-  - cd plugins/
-  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
-  - make -j 10
-  - make clean
-  - cd ../
-  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake mini-paint.pro
+  # - cd plugins/
+  # - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake plugins.pro
+  # - make -j 10
+  # - make clean
+  # - cd ../
+  - $HOME/mxe/usr/i686-pc-mingw32/qt5/bin/qmake
   - make -j 10
   - make clean
   - CDIR=$(pwd)
-  - cp libextrafilters.a ./release/
-  - zip -r minni-paint.zip ./release
+  # - cp libextrafilters.a ./release/
+  - zip -r nr.zip ./release
 
 after_success:
   - cd $HOME
@@ -39,7 +39,7 @@ after_success:
   - git config --global user.name "MT"
   - git clone --quiet --branch=bin https://${GH_TOKEN}@github.com/manhtuvjp/mxe-paint.git paint_bin > /dev/null
   - cd paint_bin
-  - cp $CDIR/minni-paint.zip .
+  - cp $CDIR/nr.zip .
   # - chmod +x link.sh
   # - cp -Rf $HOME/mxe/usr .
   # - cp -f $HOME/mxe/tree.txt .
@@ -50,13 +50,13 @@ after_success:
 
 branches:
   only:
-    - master
+    - nr
 
 notifications:
   email:
     recipients:
       - manhtuvjp@gmail
-      - hoaiphong95@gmail
+      # - hoaiphong95@gmail
     on_success: always
     on_failure: always
   irc:
